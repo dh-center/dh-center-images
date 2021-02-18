@@ -1,7 +1,16 @@
-import {ReactElement} from "react";
-import {Button, Checkbox, Form, Input} from "antd";
+import {ReactElement, useState} from "react";
+import {Button, Checkbox, Form, Input, Image} from "antd";
+import styled from "styled-components";
+
+const HandleWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
 
 function Handler(): ReactElement {
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+
   const filters = [
     {
       label: 'Grayscale',
@@ -19,43 +28,47 @@ function Handler(): ReactElement {
       label: 'Mirror',
       value: 'mirror'
     }
-  ]
+  ];
+
   const onFinish = (values: any) => {
-    console.log('Success:', values);
-  }
+    setImageUrl(`${process.env.REACT_APP_HANDLE_ENDPOINT}?key=${values.key}${(values.filters && values.filters.length) ? '&' + values.filters.join('&') : ''}`);
+  };
 
   return (
-    <Form
-      name="handler"
-      onFinish={onFinish}
-    >
-      <Form.Item
-        label="Image key"
-        name="key"
-        rules={[
-          {
-            required: true,
-            message: 'Please input image key!'
-          }
-        ]}
+    <HandleWrapper>
+      <Form
+        name="handler"
+        onFinish={onFinish}
       >
-        <Input/>
-      </Form.Item>
-      <Form.Item
-        label="Filters"
-        name="filters"
-      >
-        <Checkbox.Group options={filters}/>
-      </Form.Item>
-      <Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
+        <Form.Item
+          label="Image key"
+          name="key"
+          rules={[
+            {
+              required: true,
+              message: 'Please input image key!'
+            }
+          ]}
         >
-          Handle image
-        </Button>
-      </Form.Item>
-    </Form>
+          <Input/>
+        </Form.Item>
+        <Form.Item
+          label="Filters"
+          name="filters"
+        >
+          <Checkbox.Group options={filters}/>
+        </Form.Item>
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+          >
+            Handle image
+          </Button>
+        </Form.Item>
+      </Form>
+      {imageUrl && <Image src={imageUrl} width={200}/>}
+    </HandleWrapper>
   );
 }
 

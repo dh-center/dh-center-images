@@ -35,7 +35,7 @@ function HomeView(): ReactElement {
         <Handler/>
       </ScreenPart>
     </HomeViewWrapper>
-  )
+  );
 }
 
 export default HomeView;
