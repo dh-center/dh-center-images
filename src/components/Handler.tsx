@@ -1,7 +1,25 @@
 import {ReactElement} from "react";
-import {Button, Form, Input} from "antd";
+import {Button, Checkbox, Form, Input} from "antd";
 
 function Handler(): ReactElement {
+  const filters = [
+    {
+      label: 'Grayscale',
+      value: 'grayscale'
+    },
+    {
+      label: 'Flip',
+      value: 'flip'
+    },
+    {
+      label: 'Invert',
+      value: 'invert'
+    },
+    {
+      label: 'Mirror',
+      value: 'mirror'
+    }
+  ]
   const onFinish = (values: any) => {
     console.log('Success:', values);
   }
@@ -22,6 +40,12 @@ function Handler(): ReactElement {
         ]}
       >
         <Input/>
+      </Form.Item>
+      <Form.Item
+        label="Filters"
+        name="filters"
+      >
+        <Checkbox.Group options={filters}/>
       </Form.Item>
       <Form.Item>
         <Button
