@@ -27,6 +27,10 @@ function Handler(): ReactElement {
     {
       label: 'Mirror',
       value: 'mirror'
+    },
+    {
+      label: 'Equalize',
+      value: 'equalize'
     }
   ];
 
